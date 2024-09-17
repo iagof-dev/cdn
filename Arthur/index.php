@@ -1,9 +1,9 @@
 <?php
 
 
-$db_name = "miaudote";
+$db_name = "arthur_miaudote";
 
-$con = new PDO("mysql:host=localhost:3307;dbname=" . $db_name, 'root', 'etecjau');
+$con = new PDO("mysql:host=localhost;dbname=" . $db_name, 'root', '');
 $con->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
 if(!isset($_FILES['upload'])){
@@ -29,9 +29,9 @@ $uniq_name = uniqid('file_') . '.' . $ext_file;
 $final_path = $directory . $uniq_name;
 
 if(move_uploaded_file($received_file['tmp_name'], $final_path)){
-    $smt = $con->prepare("INSERT INTO ". $db_name . " VALUES (default, '". $uniq_name ."')");
+    $smt = $con->prepare("INSERT INTO imagens VALUES (default, '". $uniq_name ."')");
     $smt->execute();
-    echo(json_encode(['status'=>'sucesso', 'arquivo' => $uniq_name]));
+    echo(json_encode(['status'=>'sucesso', 'arquivo' => 'https://marciossupiais.shop/arthur_miaudote/uploads/' . $uniq_name]));
 }
 else{
     echo(json_encode(['status'=>'erro']));
